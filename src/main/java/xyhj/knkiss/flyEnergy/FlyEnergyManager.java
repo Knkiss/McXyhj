@@ -6,6 +6,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import xyhj.knkiss.McXyhj;
+import xyhj.knkiss.flyEnergy.speedCheck.SpeedCheckManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,9 +17,9 @@ import java.util.Objects;
 public class FlyEnergyManager {
 	
 	static Plugin plugin;
-	static HashMap<String,Integer> fly = new HashMap<>();
+	static HashMap<String,Double> fly = new HashMap<>();
 	static HashMap<String,Integer> flyTime = new HashMap<>();
-	static HashMap<String,Integer> walk = new HashMap<>();
+	static HashMap<String,Double> walk = new HashMap<>();
 	static int valuePerSecond = 1;
 	static double valuePer1Power = 1;
 	static BukkitRunnable br;
@@ -33,6 +35,8 @@ public class FlyEnergyManager {
 		new FlyEnergyConfig(plugin);
 		checkReload();
 		newTask();
+		
+		Bukkit.getPluginManager().registerEvents(new SpeedCheckManager(), McXyhj.plugin);
 	}
 	
 	public static void onDisable(){
@@ -41,7 +45,10 @@ public class FlyEnergyManager {
 	
 	public static void checkReload(){
 		//服务器reload重载时检测服务器在线玩家并重载数据 config
-		Bukkit.getOnlinePlayers().forEach(FlyEnergyConfig::getPlayerConfig);
+		Bukkit.getOnlinePlayers().forEach(player -> {
+			FlyEnergyConfig.getPlayerConfig(player);
+			SpeedCheckManager.onReload(player);
+		});
 	}
 	
 	private static void newTask(){
@@ -54,10 +61,10 @@ public class FlyEnergyManager {
 					FlyEnergyManager.flyTime.replace(name,time-1);
 					if(time - 1==0){
 						//Objects.requireNonNull(Bukkit.getPlayer(name)).sendMessage("消耗 1s，已续费");
-						if(FlyEnergyManager.fly.get(name) >= FlyEnergyManager.valuePerSecond){
+						if(FlyEnergyManager.fly.get(name) >= FlyEnergyManager.valuePerSecond*SpeedCheckManager.getPlayerMul(name)){
 							FlyEnergyManager.flyTime.replace(name,1);
-							FlyEnergyManager.fly.replace(name,FlyEnergyManager.fly.get(name)-FlyEnergyManager.valuePerSecond);
-							//Objects.requireNonNull(Bukkit.getPlayer(name)).sendMessage("消耗 "+valuePerSecond+" 点能量，还有 "+FlyEnergyManager.fly.get(name)+" 点能量");
+							FlyEnergyManager.fly.replace(name,FlyEnergyManager.fly.get(name)-FlyEnergyManager.valuePerSecond*SpeedCheckManager.getPlayerMul(name));
+							Objects.requireNonNull(Bukkit.getPlayer(name)).sendMessage("消耗 "+valuePerSecond*SpeedCheckManager.getPlayerMul(name)+" 点能量，还有 "+FlyEnergyManager.fly.get(name)+" 点能量");
 						}else{
 							noFlyList.add(name);
 						}
@@ -74,7 +81,7 @@ public class FlyEnergyManager {
 	
 	public static boolean inFly(String name){
 		if(fly.containsKey(name))return true;
-		if(!walk.containsKey(name))walk.put(name,0);
+		if(!walk.containsKey(name))walk.put(name,0.0);
 		return false;
 	}
 	
@@ -102,17 +109,17 @@ public class FlyEnergyManager {
 		
 		String name = p.getName();
 		if(inFly(name)){
-			p.sendMessage("你已经开启飞行能力，已消耗 "+ valuePerSecond*30 +" 点能量，30秒后将每秒将损失 "+valuePerSecond+" 点能量");
+			p.sendMessage("你已经开启飞行能力，已消耗 "+ valuePerSecond*15 +" 点能量，15秒后将每秒将损失 "+valuePerSecond+" 点能量");
 		}else{
-			if(walk.get(name) >= valuePerSecond*30){
-				fly.put(name,walk.get(name)-valuePerSecond*30);
-				flyTime.put(name,30);
+			if(walk.get(name) >= valuePerSecond*15){
+				fly.put(name,walk.get(name)-valuePerSecond*15);
+				flyTime.put(name,15);
 				walk.remove(name);
 				p.setAllowFlight(true);
 				p.setFlying(true);
-				p.sendMessage("你已经开启飞行能力，已消耗 "+ valuePerSecond*30 +" 点能量，30秒后将每秒将损失 "+valuePerSecond+" 点能量");
+				p.sendMessage("你已经开启飞行能力，已消耗 "+ valuePerSecond*15 +" 点能量，15秒后将每秒将损失 "+valuePerSecond+" 点能量");
 			}else{
-				p.sendMessage("你需要消耗 "+(valuePerSecond*30)+" 点能量才可开启飞行");
+				p.sendMessage("你需要消耗 "+(valuePerSecond*15)+" 点能量才可开启飞行");
 			}
 		}
 	}

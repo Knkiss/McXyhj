@@ -30,7 +30,7 @@ public class FlyEnergyListener implements Listener {
 		String name = e.getPlayer().getName();
 		if(FlyEnergyManager.inFly(name)){
 			FlyEnergyManager.flyTime.remove(name);
-			int num = FlyEnergyManager.fly.get(name);
+			double num = FlyEnergyManager.fly.get(name);
 			FlyEnergyManager.walk.put(name,num);
 			FlyEnergyManager.fly.remove(name);
 		}
@@ -43,7 +43,7 @@ public class FlyEnergyListener implements Listener {
 		if(FlyEnergyManager.inFly(name)){
 			if(e.getFrom().getName().equalsIgnoreCase("world")){
 				FlyEnergyManager.flyTime.remove(name);
-				int num = FlyEnergyManager.fly.get(name);
+				double num = FlyEnergyManager.fly.get(name);
 				FlyEnergyManager.walk.put(name,num);
 				FlyEnergyManager.fly.remove(name);
 				e.getPlayer().sendMessage("检测到你切换到非主世界，飞行已被关闭");

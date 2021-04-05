@@ -39,9 +39,9 @@ public class FlyEnergyConfig {
 	public static void getPlayerConfig(Player p){
 		if(!FlyEnergyManager.walk.containsKey(p.getName())){
 			if(flyEnergyConfig.contains(p.getName().toLowerCase()))
-				FlyEnergyManager.walk.put(p.getName(),flyEnergyConfig.getInt(p.getName().toLowerCase()));
+				FlyEnergyManager.walk.put(p.getName(),flyEnergyConfig.getDouble(p.getName().toLowerCase()));
 			else
-				FlyEnergyManager.walk.put(p.getName(),0);
+				FlyEnergyManager.walk.put(p.getName(),0.0);
 		}
 	}
 	
@@ -51,10 +51,12 @@ public class FlyEnergyConfig {
 		FlyEnergyManager.fly.forEach((name,number)->{
 			Player player = Bukkit.getPlayer(name);
 			if(player != null){
-				player.sendMessage("服务器重载，你的飞行已关闭");
-				player.addPotionEffect(FlyEnergyManager.pe);
-				player.setAllowFlight(false);
-				player.setFlying(false);
+				if(!player.isOp()){
+					player.sendMessage("服务器重载，你的飞行已关闭");
+					player.addPotionEffect(FlyEnergyManager.pe);
+					player.setAllowFlight(false);
+					player.setFlying(false);
+				}
 			}
 			FlyEnergyManager.walk.put(name,number);
 		});

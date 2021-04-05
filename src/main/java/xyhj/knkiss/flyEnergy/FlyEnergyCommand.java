@@ -37,7 +37,7 @@ public class FlyEnergyCommand implements CommandExecutor {
 					
 					if(McXyhj.econ.getBalance(name) >= valuePerPower*num){
 						McXyhj.econ.withdrawPlayer(name,num * valuePerPower);
-						int sum;
+						double sum;
 						if(FlyEnergyManager.inFly(name)){
 							FlyEnergyManager.fly.replace(name,FlyEnergyManager.fly.get(name)+num);
 							sum = FlyEnergyManager.fly.get(name);
@@ -52,8 +52,8 @@ public class FlyEnergyCommand implements CommandExecutor {
 				}
 			}
 		}else if(args[0].equalsIgnoreCase("info")){
-			if(FlyEnergyManager.inFly(name))p.sendMessage("你还有 "+FlyEnergyManager.fly.get(name).toString()+" 点能量");
-			else p.sendMessage("你还有 "+FlyEnergyManager.walk.get(name).toString()+" 点能量");
+			if(FlyEnergyManager.inFly(name))p.sendMessage("你还有 "+FlyEnergyManager.fly.get(name)+" 点能量");
+			else p.sendMessage("你还有 "+FlyEnergyManager.walk.get(name)+" 点能量");
 		}else if(args[0].equalsIgnoreCase("reload")){
 			if(p.hasPermission("mcxyhj.admin")){
 				FlyEnergyConfig.reloadConfig();

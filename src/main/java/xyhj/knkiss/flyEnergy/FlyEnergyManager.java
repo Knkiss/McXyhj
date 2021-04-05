@@ -64,7 +64,7 @@ public class FlyEnergyManager {
 						if(FlyEnergyManager.fly.get(name) >= FlyEnergyManager.valuePerSecond*SpeedCheckManager.getPlayerMul(name)){
 							FlyEnergyManager.flyTime.replace(name,1);
 							FlyEnergyManager.fly.replace(name,FlyEnergyManager.fly.get(name)-FlyEnergyManager.valuePerSecond*SpeedCheckManager.getPlayerMul(name));
-							Objects.requireNonNull(Bukkit.getPlayer(name)).sendMessage("消耗 "+valuePerSecond*SpeedCheckManager.getPlayerMul(name)+" 点能量，还有 "+FlyEnergyManager.fly.get(name)+" 点能量");
+							//Objects.requireNonNull(Bukkit.getPlayer(name)).sendMessage("消耗 "+valuePerSecond*SpeedCheckManager.getPlayerMul(name)+" 点能量，还有 "+FlyEnergyManager.fly.get(name)+" 点能量");
 						}else{
 							noFlyList.add(name);
 						}
@@ -109,7 +109,7 @@ public class FlyEnergyManager {
 		
 		String name = p.getName();
 		if(inFly(name)){
-			p.sendMessage("你已经开启飞行能力，已消耗 "+ valuePerSecond*15 +" 点能量，15秒后将每秒将损失 "+valuePerSecond+" 点能量");
+			p.sendMessage("你已经开启飞行能力，已消耗 "+ valuePerSecond*15 +" 点能量");
 		}else{
 			if(walk.get(name) >= valuePerSecond*15){
 				fly.put(name,walk.get(name)-valuePerSecond*15);
@@ -117,7 +117,7 @@ public class FlyEnergyManager {
 				walk.remove(name);
 				p.setAllowFlight(true);
 				p.setFlying(true);
-				p.sendMessage("你已经开启飞行能力，已消耗 "+ valuePerSecond*15 +" 点能量，15秒后将每秒将损失 "+valuePerSecond+" 点能量");
+				p.sendMessage("你已经开启飞行能力，已消耗 "+ valuePerSecond*15 +" 点能量");
 			}else{
 				p.sendMessage("你需要消耗 "+(valuePerSecond*15)+" 点能量才可开启飞行");
 			}

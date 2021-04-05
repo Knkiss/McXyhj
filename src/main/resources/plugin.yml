@@ -1,0 +1,22 @@
+name: McXyhj
+version: ${project.version}
+main: xyhj.knkiss.McXyhj
+api-version: 1.16
+authors: [Knkiss, Dnkiss]
+description: Plugins For McXyhj
+website: www.mcxyhj.cn
+depend: [Vault]
+
+commands:
+  flyenergy:
+    description: a command to start fly energy
+    usage: /flyEnergy
+    aliases: fe
+  bd:
+    description: a command to close or open scoreboard forever
+    usage: /bd
+
+Permissions:
+  mcxyhj.zhengban.fly:
+    description: 用于特价购买飞行能量
+

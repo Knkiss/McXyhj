@@ -15,6 +15,8 @@ public final class McXyhj extends JavaPlugin{
 	
 	public static Economy econ = null;
 	public static Plugin plugin;
+
+	private boolean hasEconomy = false;
 	
 	@Override
 	public void onEnable() {
@@ -25,9 +27,10 @@ public final class McXyhj extends JavaPlugin{
 			
 		//飞行能量
 		if (getServer().getPluginManager().getPlugin("Vault") != null) {
-			setupEconomy();
-			Objects.requireNonNull(this.getCommand("flyEnergy")).setExecutor(new FlyEnergyCommand());
-			new FlyEnergyManager(this);
+			if(setupEconomy()){
+				Objects.requireNonNull(this.getCommand("flyEnergy")).setExecutor(new FlyEnergyCommand());
+				FlyEnergyManager.onEnable(this);
+			}
 		}
 		//统计
 		//new StatisticsManager(this);
@@ -37,14 +40,23 @@ public final class McXyhj extends JavaPlugin{
 	public void onDisable() {
 		this.getLogger().info("星夜幻境插件关闭");
 		Scoreboard.onDisable();
-		if (getServer().getPluginManager().getPlugin("Vault") != null) FlyEnergyManager.onDisable();
+		if (hasEconomy) FlyEnergyManager.onDisable();
 		//统计
 		//StatisticsManager.addStartOrStopInfo(false);
 	}
 	
-	private void setupEconomy() {
-		RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-		assert rsp != null;
-		econ = rsp.getProvider();
+	private boolean setupEconomy() {
+		try {
+			RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+			assert rsp != null;
+			econ = rsp.getProvider();
+		}catch (Exception e){
+			this.hasEconomy = false;
+			return false;
+		}
+		this.hasEconomy = true;
+		return true;
 	}
+
+	public static void main(String[] args){}
 }

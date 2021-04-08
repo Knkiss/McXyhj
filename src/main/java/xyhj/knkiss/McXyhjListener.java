@@ -2,9 +2,11 @@ package xyhj.knkiss;
 
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class McXyhjListener implements Listener {
@@ -14,7 +16,12 @@ public class McXyhjListener implements Listener {
 		if(e.getEntityType().equals(EntityType.CREEPER))e.setCancelled(true);
 		if(e.getEntityType().equals(EntityType.WITHER))e.setCancelled(true);
 	}
-	
+
+	@EventHandler
+	public void onKillThing(HangingBreakByEntityEvent e){
+		if(!(e.getRemover() instanceof Player))e.setCancelled(true);
+	}
+
 	@EventHandler//登录卡地狱门
 	public void onPlayerJoinInPortalEvent(PlayerJoinEvent e){
 		if(e.getPlayer().getLocation().getBlock().getType().equals(Material.NETHER_PORTAL)){

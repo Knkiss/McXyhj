@@ -24,13 +24,9 @@ public class FlyEnergyManager {
 	static double valuePer1Power = 1;
 	static BukkitRunnable br;
 	static PotionEffect pe = new PotionEffect(PotionEffectType.SLOW_FALLING,15*20,1);
-	
-	public FlyEnergyManager(Plugin plugin){
+
+	public static void onEnable(Plugin plugin){
 		FlyEnergyManager.plugin = plugin;
-		onEnable();
-	}
-	
-	public static void onEnable(){
 		Bukkit.getPluginManager().registerEvents(new FlyEnergyListener(plugin),plugin);
 		new FlyEnergyConfig(plugin);
 		checkReload();
@@ -71,9 +67,7 @@ public class FlyEnergyManager {
 					}//Objects.requireNonNull(Bukkit.getPlayer(name)).sendMessage("消耗 1s，还有 "+(time-1)+"s");
 					
 				});
-				if(!noFlyList.isEmpty()) noFlyList.forEach(s -> {
-					stopFly(Objects.requireNonNull(Bukkit.getPlayer(s)));
-				});
+				if(!noFlyList.isEmpty()) noFlyList.forEach(s -> stopFly(Objects.requireNonNull(Bukkit.getPlayer(s))));
 			}
 		};
 		br.runTaskTimer(plugin,0,20);

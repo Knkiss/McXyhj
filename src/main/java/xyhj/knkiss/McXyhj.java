@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import xyhj.knkiss.flyEnergy.FlyEnergyCommand;
 import xyhj.knkiss.flyEnergy.FlyEnergyManager;
 import xyhj.knkiss.scoreboard.Scoreboard;
+import xyhj.knkiss.swapLocationGame.SwapLocationGameCommand;
 
 import java.util.Objects;
 
@@ -24,6 +25,8 @@ public final class McXyhj extends JavaPlugin{
 		this.getLogger().info("星夜幻境插件开始启用");
 		Bukkit.getPluginManager().registerEvents(new McXyhjListener(),this);
 		Objects.requireNonNull(this.getCommand("bd")).setExecutor(new Scoreboard());
+
+		Objects.requireNonNull(this.getCommand("slg")).setExecutor(new SwapLocationGameCommand());
 			
 		//飞行能量
 		if (getServer().getPluginManager().getPlugin("Vault") != null) {

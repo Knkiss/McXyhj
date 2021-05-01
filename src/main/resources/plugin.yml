@@ -15,6 +15,9 @@ commands:
   bd:
     description: a command to close or open scoreboard forever
     usage: /bd
+  slg:
+    description: a command to play SwapLocationGame
+    usage: /slg
 
 Permissions:
   mcxyhj.zhengban.fly:

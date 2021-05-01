@@ -9,6 +9,7 @@ import xyhj.knkiss.flyEnergy.FlyEnergyCommand;
 import xyhj.knkiss.flyEnergy.FlyEnergyManager;
 import xyhj.knkiss.scoreboard.Scoreboard;
 import xyhj.knkiss.swapLocationGame.SwapLocationGameCommand;
+import xyhj.knkiss.swapLocationGame.SwapLocationGameManager;
 
 import java.util.Objects;
 
@@ -26,7 +27,6 @@ public final class McXyhj extends JavaPlugin{
 		Bukkit.getPluginManager().registerEvents(new McXyhjListener(),this);
 		Objects.requireNonNull(this.getCommand("bd")).setExecutor(new Scoreboard());
 
-		Objects.requireNonNull(this.getCommand("slg")).setExecutor(new SwapLocationGameCommand());
 			
 		//飞行能量
 		if (getServer().getPluginManager().getPlugin("Vault") != null) {
@@ -37,6 +37,10 @@ public final class McXyhj extends JavaPlugin{
 		}
 		//统计
 		//new StatisticsManager(this);
+
+		//位置互换大逃杀
+		Objects.requireNonNull(this.getCommand("slg")).setExecutor(new SwapLocationGameCommand());
+		SwapLocationGameManager.onEnable(this);
 	}
 	
 	@Override

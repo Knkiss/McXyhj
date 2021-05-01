@@ -31,7 +31,6 @@ public class FlyEnergyManager {
 		new FlyEnergyConfig(plugin);
 		checkReload();
 		newTask();
-		
 		Bukkit.getPluginManager().registerEvents(new SpeedCheckManager(), McXyhj.plugin);
 	}
 	

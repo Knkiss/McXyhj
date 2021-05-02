@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class McXyhjListener implements Listener {
 	
@@ -27,5 +28,10 @@ public class McXyhjListener implements Listener {
 		if(e.getPlayer().getLocation().getBlock().getType().equals(Material.NETHER_PORTAL)){
 			e.getPlayer().getLocation().getBlock().setType(Material.AIR);
 		}
+	}
+
+	@EventHandler//防小黑搬东西
+	public void onEndermanCarry(EntityExplodeEvent e){
+		if(e.getEntityType().equals(EntityType.ENDERMAN)) e.setCancelled(true);
 	}
 }

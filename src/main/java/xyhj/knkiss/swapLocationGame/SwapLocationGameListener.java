@@ -1,12 +1,16 @@
 package xyhj.knkiss.swapLocationGame;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.Plugin;
 
 import java.util.LinkedList;
@@ -23,20 +27,31 @@ public class SwapLocationGameListener implements Listener {
         SwapLocationGameManager.players = SwapLocationGameManager.death(SwapLocationGameManager.players,e.getEntity().getPlayer());
         if(SwapLocationGameManager.players.size() == 1){
             Player winner = SwapLocationGameManager.players.poll();
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                player.sendTitle("胜利者是" + winner.getName() + "!!","",20,80,20);
+            });
             for(Player p : SwapLocationGameManager.all) {
-                p.sendMessage("胜利者是" + winner.getName() + "!!");
                 p.setGameMode(GameMode.SPECTATOR);
+                p.teleport(new Location(p.getWorld(),-26.5,80,-150));
             }
             SwapLocationGameManager.players.clear();
             SwapLocationGameManager.ready.clear();
             SwapLocationGameManager.all.clear();
-            SwapLocationGameManager.time = 300;
+            SwapLocationGameManager.time = 180;
+            SwapLocationGameManager.state = false;
+            SwapLocationGameManager.bossBar.setVisible(false);
+            //SwapLocationGameManager.score.setScore(180);
         }
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
         e.getPlayer().setGameMode(GameMode.SPECTATOR);
+        SwapLocationGameManager.bossBar.addPlayer(e.getPlayer());
+        e.getPlayer().teleport(new Location(e.getPlayer().getWorld(),-26.5,80,-150));
+        //SwapLocationGameManager.score = SwapLocationGameManager.objective.getScore("时间");
+        //SwapLocationGameManager.score.setScore(180);
+        //e.getPlayer().setScoreboard(SwapLocationGameManager.scoreboard);
     }
 
     @EventHandler
@@ -44,16 +59,27 @@ public class SwapLocationGameListener implements Listener {
         SwapLocationGameManager.all = SwapLocationGameManager.death(SwapLocationGameManager.all,e.getPlayer());
         SwapLocationGameManager.ready = SwapLocationGameManager.death(SwapLocationGameManager.ready,e.getPlayer());
         SwapLocationGameManager.players = SwapLocationGameManager.death(SwapLocationGameManager.players,e.getPlayer());
-        if(SwapLocationGameManager.players.size() == 1){
+        if(SwapLocationGameManager.players.size() == 1 && SwapLocationGameManager.state){
             Player winner = SwapLocationGameManager.players.poll();
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                player.sendTitle("胜利者是" + winner.getName() + "!!","",20,80,20);
+            });
             for(Player p : SwapLocationGameManager.all) {
-                p.sendMessage("胜利者是" + winner.getName() + "!!");
                 p.setGameMode(GameMode.SPECTATOR);
+                p.teleport(new Location(p.getWorld(),-26.5,80,-150));
             }
             SwapLocationGameManager.players.clear();
             SwapLocationGameManager.ready.clear();
             SwapLocationGameManager.all.clear();
-            SwapLocationGameManager.time = 300;
+            SwapLocationGameManager.time = 180;
+            SwapLocationGameManager.state = false;
+            SwapLocationGameManager.bossBar.setVisible(false);
+            //SwapLocationGameManager.score.setScore(180);
         }
+    }
+
+    @EventHandler
+    public void onPlayerRespawn(PlayerRespawnEvent e){
+        e.getPlayer().teleport(new Location(e.getPlayer().getWorld(),-26.5,80,-150));
     }
 }

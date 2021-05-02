@@ -5,12 +5,16 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.*;
 
 import java.sql.Time;
 import java.util.*;
@@ -23,28 +27,38 @@ public class SwapLocationGameManager {
     public static Queue<Player> ready = new LinkedList<>();
     //总量是all，准备好是ready，players是实时状态
     static Plugin plugin;
-    static int time = 300;
+    static int time = 180;
+    public static boolean state = false;
+    public static BossBar bossBar = Bukkit.createBossBar("下一次交换 : "+ time + " 秒    剩余玩家 : " + players.size(), BarColor.RED, BarStyle.SOLID);
+
+    //static ScoreboardManager manager = Bukkit.getScoreboardManager();
+    //static Scoreboard scoreboard = manager.getNewScoreboard();
+    //static Objective objective = scoreboard.registerNewObjective("slg","dummy","/slg开始游戏");
+    //static Score score;
 
     public static BukkitRunnable br = new BukkitRunnable() {
         @Override
         public void run() {
+            if(!state) return;
             time -= 1;
-            if (time == 180) {
+            bossBar.setTitle("下一次交换 : " + time + " 秒    剩余玩家 : " + players.size());
+            bossBar.setProgress(1/180.0*time);
+            if (time == 120) {
                 for (Player p : all) {
-                    p.sendMessage("180秒后交换位置");
+                    p.sendTitle("","120秒后交换位置",20,40,20);
                 }
             } else if (time == 60) {
                 for (Player p : all) {
-                    p.sendMessage("60秒后交换位置");
+                    p.sendTitle("","60秒后交换位置",20,40,20);
                 }
             } else if(time == 10) {
                 for(Player p : all) {
-                    p.sendMessage("10秒后交换位置");
+                    p.sendTitle("","10秒后交换位置",20,40,20);
                 }
-            } else if (time == 0) {
+            } else if (time == 1) {
                 for (Player p : all) {
-                    p.sendMessage("位置已交换");
-                    time = 300;
+                    p.sendTitle("","位置已交换",20,40,20);
+                    time = 180;
                 }
                 players = swap(players);
             }
@@ -55,9 +69,17 @@ public class SwapLocationGameManager {
         SwapLocationGameManager.plugin = plugin;
         Bukkit.getPluginManager().registerEvents(new SwapLocationGameListener(plugin),plugin);
         br.runTaskTimer(plugin, 0, 20);
+        bossBar.setVisible(false);
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            bossBar.addPlayer(player);
+            player.setGameMode(GameMode.SPECTATOR);
+            player.teleport(new Location(player.getWorld(),-26.5,80,-150));
+        });
     }
 
     public static void start(Queue<Player> playerQueue) {
+        state = true;
+        bossBar.setVisible(true);
         PotionEffect pe = new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, 255);
         int x = 0,z = 0;
         boolean isOcean = true;
@@ -86,10 +108,11 @@ public class SwapLocationGameManager {
             }
             Location l = new Location(world, x, 255, z);
             p.teleport(l);
+            p.sendMessage("180秒后交换位置");
             isOcean = true;
             p.addPotionEffect(pe);
         }
-        time = 300;
+        time = 180;
     }
 
     public static Queue<Player> swap(Queue<Player> playerQueue){
@@ -129,7 +152,7 @@ public class SwapLocationGameManager {
     public static Queue<Player> death(Queue<Player> playerQueue, Player dp){
         Queue<Player> tempQueue = new LinkedList<>();
         dp.setGameMode(GameMode.SPECTATOR);
-        for(Player p : players)
+        for(Player p : playerQueue)
             if(!p.getName().equals(dp.getName()))
                 tempQueue.add(p);
         return tempQueue;

@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.Objective;
 import xyhj.knkiss.flyEnergy.FlyEnergyCommand;
 import xyhj.knkiss.flyEnergy.FlyEnergyManager;
 import xyhj.knkiss.scoreboard.Scoreboard;
@@ -27,7 +28,10 @@ public final class McXyhj extends JavaPlugin{
 		Bukkit.getPluginManager().registerEvents(new McXyhjListener(),this);
 		Objects.requireNonNull(this.getCommand("bd")).setExecutor(new Scoreboard());
 
-			
+
+		//选择开启功能
+		//Objects.requireNonNull(this.getCommand("mcxyhj")).setExecutor(new McXyhjCommand());
+
 		//飞行能量
 		if (getServer().getPluginManager().getPlugin("Vault") != null) {
 			if(setupEconomy()){
@@ -50,6 +54,7 @@ public final class McXyhj extends JavaPlugin{
 		if (hasEconomy) FlyEnergyManager.onDisable();
 		//统计
 		//StatisticsManager.addStartOrStopInfo(false);
+		SwapLocationGameManager.bossBar.removeAll();
 	}
 	
 	private boolean setupEconomy() {
@@ -64,6 +69,7 @@ public final class McXyhj extends JavaPlugin{
 		this.hasEconomy = true;
 		return true;
 	}
+
 
 	public static void main(String[] args){}
 }

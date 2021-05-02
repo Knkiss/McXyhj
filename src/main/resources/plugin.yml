@@ -8,6 +8,9 @@ website: www.mcxyhj.cn
 depend: [Vault]
 
 commands:
+  mcxyhj:
+    description: a command to
+    usage: /mcxyhj
   flyenergy:
     description: a command to start fly energy
     usage: /flyEnergy

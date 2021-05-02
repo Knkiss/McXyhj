@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -58,13 +59,34 @@ public class SwapLocationGameManager {
 
     public static void start(Queue<Player> playerQueue) {
         PotionEffect pe = new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, 255);
+        int x = 0,z = 0;
+        boolean isOcean = true;
         for(Player p : playerQueue) {
             p.setGameMode(GameMode.SURVIVAL);
             p.getInventory().clear();
-            Random r = new Random();
+            Random r = new Random(new Date().getTime());
             World world = p.getWorld();
-            Location l = new Location(world, r.nextInt(100001), 255, r.nextInt(100001));
+            while(isOcean){
+                x = r.nextInt(100001);
+                z = r.nextInt(100001);
+                //plugin.getLogger().info("xyz");
+                Biome biome = world.getBiome(x,200,z);
+                if(!biome.equals(Biome.OCEAN)
+                &&!biome.equals(Biome.DEEP_OCEAN)
+                &&!biome.equals(Biome.COLD_OCEAN)
+                &&!biome.equals(Biome.DEEP_COLD_OCEAN)
+                &&!biome.equals(Biome.FROZEN_OCEAN)
+                &&!biome.equals(Biome.DEEP_FROZEN_OCEAN)
+                &&!biome.equals(Biome.LUKEWARM_OCEAN)
+                &&!biome.equals(Biome.DEEP_LUKEWARM_OCEAN)
+                &&!biome.equals(Biome.WARM_OCEAN)
+                &&!biome.equals(Biome.DEEP_WARM_OCEAN)){
+                    isOcean = false;
+                }
+            }
+            Location l = new Location(world, x, 255, z);
             p.teleport(l);
+            isOcean = true;
             p.addPotionEffect(pe);
         }
         time = 300;

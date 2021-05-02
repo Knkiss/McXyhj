@@ -43,7 +43,7 @@ public class SwapLocationGameManager {
             } else if (time == 0) {
                 for (Player p : all) {
                     p.sendMessage("位置已交换");
-                    time = 10;
+                    time = 300;
                 }
                 players = swap(players);
             }
@@ -67,7 +67,7 @@ public class SwapLocationGameManager {
             p.teleport(l);
             p.addPotionEffect(pe);
         }
-        time = 10;
+        time = 300;
     }
 
     public static Queue<Player> swap(Queue<Player> playerQueue){
@@ -104,7 +104,7 @@ public class SwapLocationGameManager {
         return playerQueue;
     }
 
-    public static Queue<Player> death(Queue<Player> playerQueue,Player dp){
+    public static Queue<Player> death(Queue<Player> playerQueue, Player dp){
         Queue<Player> tempQueue = new LinkedList<>();
         dp.setGameMode(GameMode.SPECTATOR);
         for(Player p : players)

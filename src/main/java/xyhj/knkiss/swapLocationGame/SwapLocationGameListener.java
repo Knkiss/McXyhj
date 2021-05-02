@@ -30,7 +30,7 @@ public class SwapLocationGameListener implements Listener {
             SwapLocationGameManager.players.clear();
             SwapLocationGameManager.ready.clear();
             SwapLocationGameManager.all.clear();
-            SwapLocationGameManager.time = 10;
+            SwapLocationGameManager.time = 300;
         }
     }
 
@@ -41,15 +41,19 @@ public class SwapLocationGameListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e){
-        Player p = e.getPlayer();
-        Queue<Player> temp = new LinkedList<>();
-        while(SwapLocationGameManager.ready.peek()!=null){
-            if(SwapLocationGameManager.ready.poll().getName().equals(p.getName()));
-            else temp.add(SwapLocationGameManager.ready.poll());
-        }
-        while(SwapLocationGameManager.all.peek()!=null){
-            if(SwapLocationGameManager.all.poll().getName().equals(p.getName()));
-            else temp.add(SwapLocationGameManager.all.poll());
+        SwapLocationGameManager.all = SwapLocationGameManager.death(SwapLocationGameManager.all,e.getPlayer());
+        SwapLocationGameManager.ready = SwapLocationGameManager.death(SwapLocationGameManager.ready,e.getPlayer());
+        SwapLocationGameManager.players = SwapLocationGameManager.death(SwapLocationGameManager.players,e.getPlayer());
+        if(SwapLocationGameManager.players.size() == 1){
+            Player winner = SwapLocationGameManager.players.poll();
+            for(Player p : SwapLocationGameManager.all) {
+                p.sendMessage("胜利者是" + winner.getName() + "!!");
+                p.setGameMode(GameMode.SPECTATOR);
+            }
+            SwapLocationGameManager.players.clear();
+            SwapLocationGameManager.ready.clear();
+            SwapLocationGameManager.all.clear();
+            SwapLocationGameManager.time = 300;
         }
     }
 }

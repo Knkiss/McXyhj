@@ -1,9 +1,6 @@
 package xyhj.knkiss.swapLocationGame;
 
 import org.bukkit.GameMode;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,11 +20,17 @@ public class SwapLocationGameListener implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e){
-        SwapLocationGameUtil.death(SwapLocationGameUtil.players,e.getEntity().getPlayer());
-        if(SwapLocationGameUtil.players.size() == 1){
-            while(SwapLocationGameUtil.all.peek() != null){
-                SwapLocationGameUtil.all.poll().sendMessage("胜利者是"+SwapLocationGameUtil.players.poll().getName()+"!!");
+        SwapLocationGameManager.players = SwapLocationGameManager.death(SwapLocationGameManager.players,e.getEntity().getPlayer());
+        if(SwapLocationGameManager.players.size() == 1){
+            Player winner = SwapLocationGameManager.players.poll();
+            for(Player p : SwapLocationGameManager.all) {
+                p.sendMessage("胜利者是" + winner.getName() + "!!");
+                p.setGameMode(GameMode.SPECTATOR);
             }
+            SwapLocationGameManager.players.clear();
+            SwapLocationGameManager.ready.clear();
+            SwapLocationGameManager.all.clear();
+            SwapLocationGameManager.time = 10;
         }
     }
 
@@ -40,13 +43,13 @@ public class SwapLocationGameListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent e){
         Player p = e.getPlayer();
         Queue<Player> temp = new LinkedList<>();
-        while(SwapLocationGameUtil.ready.peek()!=null){
-            if(SwapLocationGameUtil.ready.poll().getName().equals(p.getName()));
-            else temp.add(SwapLocationGameUtil.ready.poll());
+        while(SwapLocationGameManager.ready.peek()!=null){
+            if(SwapLocationGameManager.ready.poll().getName().equals(p.getName()));
+            else temp.add(SwapLocationGameManager.ready.poll());
         }
-        while(SwapLocationGameUtil.all.peek()!=null){
-            if(SwapLocationGameUtil.all.poll().getName().equals(p.getName()));
-            else temp.add(SwapLocationGameUtil.all.poll());
+        while(SwapLocationGameManager.all.peek()!=null){
+            if(SwapLocationGameManager.all.poll().getName().equals(p.getName()));
+            else temp.add(SwapLocationGameManager.all.poll());
         }
     }
 }

@@ -5,6 +5,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityAirChangeEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -30,8 +31,8 @@ public class McXyhjListener implements Listener {
 		}
 	}
 
-	@EventHandler//防小黑搬东西
-	public void onEndermanCarry(EntityExplodeEvent e){
+	/*@EventHandler//防小黑搬东西
+	public void onEndermanCarry(Entity e){
 		if(e.getEntityType().equals(EntityType.ENDERMAN)) e.setCancelled(true);
-	}
+	}*/
 }

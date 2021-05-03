@@ -1,9 +1,6 @@
 package xyhj.knkiss.swapLocationGame;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -16,6 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
 
+import java.sql.DatabaseMetaData;
 import java.sql.Time;
 import java.util.*;
 
@@ -31,6 +29,11 @@ public class SwapLocationGameManager {
     public static boolean state = false;
     public static BossBar bossBar = Bukkit.createBossBar("下一次交换 : "+ time + " 秒    剩余玩家 : " + players.size(), BarColor.RED, BarStyle.SOLID);
 
+    public static World slgWorld = Bukkit.getWorld("slg");
+    public static World mainWorld = Bukkit.getWorld("world");
+
+
+
     //static ScoreboardManager manager = Bukkit.getScoreboardManager();
     //static Scoreboard scoreboard = manager.getNewScoreboard();
     //static Objective objective = scoreboard.registerNewObjective("slg","dummy","/slg开始游戏");
@@ -42,7 +45,7 @@ public class SwapLocationGameManager {
             if(!state) return;
             time -= 1;
             bossBar.setTitle("下一次交换 : " + time + " 秒    剩余玩家 : " + players.size());
-            bossBar.setProgress(1/180.0*time);
+            bossBar.setProgress(1/180.0*(time+1));
             if (time == 120) {
                 for (Player p : all) {
                     p.sendTitle("","120秒后交换位置",20,40,20);
@@ -55,7 +58,7 @@ public class SwapLocationGameManager {
                 for(Player p : all) {
                     p.sendTitle("","10秒后交换位置",20,40,20);
                 }
-            } else if (time == 1) {
+            } else if (time == 0) {
                 for (Player p : all) {
                     p.sendTitle("","位置已交换",20,40,20);
                     time = 180;
@@ -73,11 +76,18 @@ public class SwapLocationGameManager {
         Bukkit.getOnlinePlayers().forEach(player -> {
             bossBar.addPlayer(player);
             player.setGameMode(GameMode.SPECTATOR);
-            player.teleport(new Location(player.getWorld(),-26.5,80,-150));
+            player.teleport(new Location(mainWorld,-26.5,80,-150));
         });
+        slgWorld = Bukkit.createWorld(new WorldCreator("slg").seed(new Date().getTime()));
+        mainWorld = Bukkit.createWorld(new WorldCreator("world"));
+        plugin.getLogger().info(String.valueOf(mainWorld.getUID()));
+        plugin.getLogger().info(slgWorld.getUID().toString());
+
     }
 
     public static void start(Queue<Player> playerQueue) {
+        slgWorld = Bukkit.createWorld(new WorldCreator("slg").seed(new Date().getTime()));
+        slgWorld.setTime(0);
         state = true;
         bossBar.setVisible(true);
         PotionEffect pe = new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, 255);
@@ -89,10 +99,10 @@ public class SwapLocationGameManager {
             Random r = new Random(new Date().getTime());
             World world = p.getWorld();
             while(isOcean){
-                x = r.nextInt(100001);
-                z = r.nextInt(100001);
+                x = r.nextInt(5001);
+                z = r.nextInt(5001);
                 //plugin.getLogger().info("xyz");
-                Biome biome = world.getBiome(x,200,z);
+                Biome biome = slgWorld.getBiome(x,200,z);
                 if(!biome.equals(Biome.OCEAN)
                 &&!biome.equals(Biome.DEEP_OCEAN)
                 &&!biome.equals(Biome.COLD_OCEAN)
@@ -106,7 +116,7 @@ public class SwapLocationGameManager {
                     isOcean = false;
                 }
             }
-            Location l = new Location(world, x, 255, z);
+            Location l = new Location(slgWorld, x, 255, z);
             p.teleport(l);
             p.sendMessage("180秒后交换位置");
             isOcean = true;
@@ -120,7 +130,7 @@ public class SwapLocationGameManager {
             return playerQueue;
         }
         List<Location> lastLocation = new ArrayList<>();
-        Location l = new Location(playerQueue.peek().getWorld(),0,0,0);
+        Location l = new Location(slgWorld,0,0,0);
         for(Player p : playerQueue) lastLocation.add(p.getLocation());
         Random rand = new Random();
         List<Location> randomLocation = new ArrayList<>(lastLocation);

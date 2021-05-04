@@ -34,7 +34,9 @@ public class SwapLocationGameListener implements Listener {
             });
             for(Player p : SwapLocationGameManager.all) {
                 p.setGameMode(GameMode.SPECTATOR);
-                p.teleport(new Location(SwapLocationGameManager.mainWorld,-26.5,80,-150));
+                if(!p.getName().equals(e.getEntity().getPlayer().getName())){
+                    p.teleport(new Location(SwapLocationGameManager.mainWorld,-26.5,80,-150));
+                }
             }
             SwapLocationGameManager.players.clear();
             SwapLocationGameManager.ready.clear();
@@ -69,7 +71,9 @@ public class SwapLocationGameListener implements Listener {
             });
             for(Player p : SwapLocationGameManager.all) {
                 p.setGameMode(GameMode.SPECTATOR);
-                p.teleport(new Location(SwapLocationGameManager.mainWorld,-26.5,80,-150));
+                if(!p.getName().equals(e.getPlayer().getName())){
+                    p.teleport(new Location(SwapLocationGameManager.mainWorld,-26.5,80,-150));
+                }
             }
             SwapLocationGameManager.players.clear();
             SwapLocationGameManager.ready.clear();

@@ -90,7 +90,6 @@ public class SwapLocationGameManager {
         slgWorld.setTime(0);
         state = true;
         bossBar.setVisible(true);
-        PotionEffect pe = new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, 255);
         int x = 0,z = 0;
         boolean isOcean = true;
         for(Player p : playerQueue) {
@@ -120,7 +119,9 @@ public class SwapLocationGameManager {
             p.teleport(l);
             p.sendMessage("180秒后交换位置");
             isOcean = true;
-            p.addPotionEffect(pe);
+            p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 400, 255));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,400,255));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION,400,255));
         }
         time = 180;
     }

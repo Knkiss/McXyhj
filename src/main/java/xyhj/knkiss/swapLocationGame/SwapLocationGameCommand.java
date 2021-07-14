@@ -1,4 +1,4 @@
-package xyhj.knkiss.swapLocationGame;
+/*package xyhj.knkiss.swapLocationGame;
 
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
@@ -126,7 +126,7 @@ public class SwapLocationGameCommand implements CommandExecutor {
             for(Player player : SwapLocationGameManager.ready) p.sendMessage(player.getName());
             p.sendMessage("战局内玩家");
             for(Player player : SwapLocationGameManager.players) p.sendMessage(player.getName());*/
-        }
+        /*}
 
         else if(args[0].equalsIgnoreCase("time")){
             p.sendMessage(String.valueOf(SwapLocationGameManager.time));
@@ -163,5 +163,5 @@ public class SwapLocationGameCommand implements CommandExecutor {
         }
 
             return true;
-    }
-}
+    }}*/
+

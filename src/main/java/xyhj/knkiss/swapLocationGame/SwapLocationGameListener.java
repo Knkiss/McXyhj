@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.Plugin;
 
-import java.util.LinkedList;
+/*import java.util.LinkedList;
 import java.util.Queue;
 
 public class SwapLocationGameListener implements Listener {
@@ -89,4 +89,4 @@ public class SwapLocationGameListener implements Listener {
     public void onPlayerRespawn(PlayerRespawnEvent e){
         e.getPlayer().teleport(new Location(SwapLocationGameManager.mainWorld,-26.5,80,-150));
     }
-}
+}*/

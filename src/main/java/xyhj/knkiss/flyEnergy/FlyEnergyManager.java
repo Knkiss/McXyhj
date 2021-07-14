@@ -1,6 +1,7 @@
 package xyhj.knkiss.flyEnergy;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
@@ -84,9 +85,11 @@ public class FlyEnergyManager {
 			walk.put(name,fly.get(name));
 			fly.remove(name);
 			flyTime.remove(name);
-			
-			p.setAllowFlight(false);
-			p.setFlying(false);
+
+			if(p.getGameMode() != GameMode.SPECTATOR){
+				p.setAllowFlight(false);
+				p.setFlying(false);
+			}
 			p.addPotionEffect(pe);
 			p.sendMessage("你已经关闭飞行能力，剩余 "+walk.get(name)+" 点能量");
 		}else{

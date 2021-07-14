@@ -1,6 +1,7 @@
 package xyhj.knkiss.flyEnergy;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -54,8 +55,10 @@ public class FlyEnergyConfig {
 				if(!player.isOp()){
 					player.sendMessage("服务器重载，你的飞行已关闭");
 					player.addPotionEffect(FlyEnergyManager.pe);
-					player.setAllowFlight(false);
-					player.setFlying(false);
+					if(player.getGameMode() != GameMode.SPECTATOR){
+						player.setAllowFlight(false);
+						player.setFlying(false);
+					}
 				}
 			}
 			FlyEnergyManager.walk.put(name,number);

@@ -9,8 +9,8 @@ import org.bukkit.scoreboard.Objective;
 import xyhj.knkiss.flyEnergy.FlyEnergyCommand;
 import xyhj.knkiss.flyEnergy.FlyEnergyManager;
 import xyhj.knkiss.scoreboard.Scoreboard;
-import xyhj.knkiss.swapLocationGame.SwapLocationGameCommand;
-import xyhj.knkiss.swapLocationGame.SwapLocationGameManager;
+//import xyhj.knkiss.swapLocationGame.SwapLocationGameCommand;
+//import xyhj.knkiss.swapLocationGame.SwapLocationGameManager;
 
 import java.util.Objects;
 
@@ -43,8 +43,8 @@ public final class McXyhj extends JavaPlugin{
 		//new StatisticsManager(this);
 
 		//位置互换大逃杀
-		Objects.requireNonNull(this.getCommand("slg")).setExecutor(new SwapLocationGameCommand());
-		SwapLocationGameManager.onEnable(this);
+		//Objects.requireNonNull(this.getCommand("slg")).setExecutor(new SwapLocationGameCommand());
+		//SwapLocationGameManager.onEnable(this);
 	}
 	
 	@Override
@@ -54,7 +54,7 @@ public final class McXyhj extends JavaPlugin{
 		if (hasEconomy) FlyEnergyManager.onDisable();
 		//统计
 		//StatisticsManager.addStartOrStopInfo(false);
-		SwapLocationGameManager.bossBar.removeAll();
+		//SwapLocationGameManager.bossBar.removeAll();
 	}
 	
 	private boolean setupEconomy() {

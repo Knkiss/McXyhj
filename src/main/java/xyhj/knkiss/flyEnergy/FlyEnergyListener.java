@@ -1,5 +1,6 @@
 package xyhj.knkiss.flyEnergy;
 
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -47,8 +48,12 @@ public class FlyEnergyListener implements Listener {
 				FlyEnergyManager.walk.put(name,num);
 				FlyEnergyManager.fly.remove(name);
 				e.getPlayer().sendMessage("检测到你切换到非主世界，飞行已被关闭");
-				e.getPlayer().setFlying(false);
-				e.getPlayer().setAllowFlight(false);
+
+				if(e.getPlayer().getGameMode() != GameMode.SPECTATOR){
+					e.getPlayer().setFlying(false);
+					e.getPlayer().setAllowFlight(false);
+				}
+
 			}
 		}
 	}

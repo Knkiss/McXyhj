@@ -1,4 +1,4 @@
-package xyhj.knkiss.swapLocationGame;
+/*package xyhj.knkiss.swapLocationGame;
 
 import org.bukkit.*;
 import org.bukkit.block.Biome;
@@ -168,4 +168,4 @@ public class SwapLocationGameManager {
                 tempQueue.add(p);
         return tempQueue;
     }
-}
+}*/

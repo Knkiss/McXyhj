@@ -1,9 +1,9 @@
-package xyhj.knkiss.scoreboard;
+package cn.mcxyhj.knkiss.scoreboard;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
-import xyhj.knkiss.McXyhj;
+import cn.mcxyhj.knkiss.McXyhj;
 
 import java.io.File;
 import java.io.IOException;

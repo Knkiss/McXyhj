@@ -1,14 +1,14 @@
-package xyhj.knkiss;
+package cn.mcxyhj.knkiss;
 
+import cn.mcxyhj.dnkiss.armor.ArmorCommand;
+import cn.mcxyhj.knkiss.flyEnergy.FlyEnergyCommand;
+import cn.mcxyhj.knkiss.flyEnergy.FlyEnergyManager;
+import cn.mcxyhj.knkiss.scoreboard.Scoreboard;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Objective;
-import xyhj.knkiss.flyEnergy.FlyEnergyCommand;
-import xyhj.knkiss.flyEnergy.FlyEnergyManager;
-import xyhj.knkiss.scoreboard.Scoreboard;
 //import xyhj.knkiss.swapLocationGame.SwapLocationGameCommand;
 //import xyhj.knkiss.swapLocationGame.SwapLocationGameManager;
 
@@ -45,6 +45,9 @@ public final class McXyhj extends JavaPlugin{
 		//位置互换大逃杀
 		//Objects.requireNonNull(this.getCommand("slg")).setExecutor(new SwapLocationGameCommand());
 		//SwapLocationGameManager.onEnable(this);
+
+		//玩家护甲相关
+		Objects.requireNonNull(this.getCommand("armor")).setExecutor(new ArmorCommand());
 	}
 	
 	@Override

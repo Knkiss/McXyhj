@@ -1,4 +1,4 @@
-package xyhj.knkiss;
+package cn.mcxyhj.knkiss;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

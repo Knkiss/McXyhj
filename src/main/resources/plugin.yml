@@ -1,7 +1,7 @@
 name: McXyhj
 version: ${project.version}
-main: xyhj.knkiss.McXyhj
-api-version: 1.16
+main: cn.mcxyhj.knkiss.McXyhj
+api-version: 1.17
 authors: [Knkiss, Dnkiss]
 description: Plugins For McXyhj
 website: www.mcxyhj.cn
@@ -21,6 +21,9 @@ commands:
   slg:
     description: a command to play SwapLocationGame
     usage: /slg
+  armor:
+    description: a command to set or get player's armor
+    usage: /armor
 
 Permissions:
   mcxyhj.zhengban.fly:

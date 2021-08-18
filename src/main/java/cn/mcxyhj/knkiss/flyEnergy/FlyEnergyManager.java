@@ -1,4 +1,4 @@
-package xyhj.knkiss.flyEnergy;
+package cn.mcxyhj.knkiss.flyEnergy;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -7,8 +7,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import xyhj.knkiss.McXyhj;
-import xyhj.knkiss.flyEnergy.speedCheck.SpeedCheckManager;
+import cn.mcxyhj.knkiss.McXyhj;
+import cn.mcxyhj.knkiss.flyEnergy.speedCheck.SpeedCheckManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

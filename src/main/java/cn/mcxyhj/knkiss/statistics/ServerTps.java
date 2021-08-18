@@ -1,4 +1,4 @@
-package xyhj.knkiss.statistics;
+package cn.mcxyhj.knkiss.statistics;
 
 public class ServerTps implements Runnable {
 	

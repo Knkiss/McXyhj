@@ -1,4 +1,4 @@
-package xyhj.knkiss.statistics;
+package cn.mcxyhj.knkiss.statistics;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

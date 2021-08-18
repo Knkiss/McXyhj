@@ -1,4 +1,4 @@
-package xyhj.knkiss.scoreboard;
+package cn.mcxyhj.knkiss.scoreboard;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -9,7 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import xyhj.knkiss.McXyhj;
+import cn.mcxyhj.knkiss.McXyhj;
 
 import java.util.ArrayList;
 import java.util.List;

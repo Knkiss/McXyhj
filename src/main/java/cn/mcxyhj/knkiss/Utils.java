@@ -1,4 +1,4 @@
-package xyhj.knkiss;
+package cn.mcxyhj.knkiss;
 
 import java.util.Calendar;
 import java.util.Date;

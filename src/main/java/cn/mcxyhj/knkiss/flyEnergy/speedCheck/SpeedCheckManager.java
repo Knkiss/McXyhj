@@ -1,4 +1,4 @@
-package xyhj.knkiss.flyEnergy.speedCheck;
+package cn.mcxyhj.knkiss.flyEnergy.speedCheck;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -7,8 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import xyhj.knkiss.McXyhj;
-import xyhj.knkiss.flyEnergy.FlyEnergyManager;
+import cn.mcxyhj.knkiss.McXyhj;
 
 import java.util.HashMap;
 

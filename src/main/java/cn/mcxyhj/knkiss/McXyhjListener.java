@@ -1,4 +1,4 @@
-package xyhj.knkiss;
+package cn.mcxyhj.knkiss;
 
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;

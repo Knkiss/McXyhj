@@ -1,4 +1,4 @@
-package xyhj.knkiss.flyEnergy;
+package cn.mcxyhj.knkiss.flyEnergy;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;

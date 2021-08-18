@@ -1,6 +1,7 @@
 package cn.mcxyhj.knkiss;
 
 import cn.mcxyhj.dnkiss.armor.ArmorCommand;
+import cn.mcxyhj.dnkiss.roll.RollCommand;
 import cn.mcxyhj.knkiss.flyEnergy.FlyEnergyCommand;
 import cn.mcxyhj.knkiss.flyEnergy.FlyEnergyManager;
 import cn.mcxyhj.knkiss.scoreboard.Scoreboard;
@@ -48,6 +49,9 @@ public final class McXyhj extends JavaPlugin{
 
 		//玩家护甲相关
 		Objects.requireNonNull(this.getCommand("armor")).setExecutor(new ArmorCommand());
+
+		//roll
+		Objects.requireNonNull(this.getCommand("roll")).setExecutor(new RollCommand());
 	}
 	
 	@Override

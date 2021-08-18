@@ -24,6 +24,9 @@ commands:
   armor:
     description: a command to set or get player's armor
     usage: /armor
+  roll:
+    description: a command to roll a point
+    usage: /roll
 
 Permissions:
   mcxyhj.zhengban.fly:
